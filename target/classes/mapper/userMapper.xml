@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.mapper.UserMapper"><!-- 接口的命名空间 -->
+       <!-- void insert(User user) -->
+       <insert id="insert" parameterType="cn.tedu.bean.User" useGeneratedKeys="true" keyProperty="id">
+              INSERT INTO t_user
+                    (uname,upwd,phone,email)
+              VALUES 
+                    (#{username},#{password},#{phone},#{email})
+       </insert>
+       <!-- User findUserByUsername(String username) -->
+       <select id="findUserByUsername" resultType="cn.tedu.bean.User">
+               SELECT 
+                      id,uname username,upwd password,phone,email, gender,
+                      created_user,created_time,
+                      modified_user,modified_time
+               FROM 
+                      t_user
+               WHERE 
+                      uname=#{username}
+       </select>
+       <!--Integer selectCount(User user) -->
+       <select id="selectCount" parameterType="cn.tedu.bean.User" resultType="java.lang.Integer">
+                 SELECT
+                     count(*)
+                 FROM
+                      t_user
+                  WHERE
+                       <if test="email!= null">
+                       email=#{email}
+                       </if>
+                        <if test="username!= null">
+                         uname=#{username}
+                       </if>
+                        <if test="phone!= null">
+                          phone=#{phone}
+                       </if>
+       </select>
+       <!-- Integer update(User user) -->
+       <update id="update"  parameterType="cn.tedu.bean.User"  >
+             UPDATE  
+                      t_user
+               SET 
+		              <if test="password!= null">
+		                    upwd=#{password},
+		              </if>
+		              <if test="username!= null">
+		                    uname=#{username},
+		              </if>
+		              <if test="phone!= null">
+		                    phone=#{phone},
+		              </if>
+		              <if test="email!= null">
+		                    email=#{email},
+		              </if>
+		              <if test="gender!= null">
+		                    gender=#{gender},
+		              </if>
+		                modified_user=#{modifiedUser},
+		                modified_time=#{modifiedTime}
+             WHERE 
+                       id=#{id}
+       </update>
+       <!-- User findUserById(Integer id) -->
+       <select id="findUserById" resultType="cn.tedu.bean.User" parameterType="java.lang.Integer">
+              SELECT 
+                     id,uname username,upwd password,phone,email, gender,
+                      created_user,created_time,
+                      modified_user,modified_time
+               FROM 
+                     t_user
+               WHERE 
+                     id=#{id}
+       </select>
+</mapper>
+
+
+
+
+
+
+

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.mapper.DistrictMapper"><!-- 接口的命名空间 -->
+        <!-- List<Province>  getProvince(); -->
+	   <select id="getProvince" resultType="cn.tedu.bean.Province">
+	        SELECT 
+	            id,
+	            province_code  AS code,
+	            province_name AS name
+	        FROM 
+	            t_dict_provinces
+	   </select>
+        <!-- List<City>  getCity(String provinceCode); -->
+          <select id="getCity" resultType="cn.tedu.bean.City">
+	        SELECT 
+	            id,
+	            city_code  AS code,
+	            city_name AS name,
+	            province_code AS provinceCode
+	        FROM 
+	            t_dict_cities
+	        WHERE
+	             province_code=#{provinceCode}
+	   </select>
+        <!--List<Area>  getArea(String cityCode); -->
+          <select id="getArea" resultType="cn.tedu.bean.Area">
+	        SELECT 
+	            id,
+	            area_code  AS code,
+	            area_name AS name,
+	            city_code AS cityCode
+	        FROM 
+	            t_dict_areas
+	        WHERE
+	            city_code =#{cityCode} 
+	         </select>
+	         <!-- String getProvinceNameByCode(String code) -->
+	         <select id="getProvinceNameByCode" resultType="java.lang.String">
+	                 SELECT  
+	                      province_name as provinceName
+	                 FROM 
+	                      t_dict_provinces
+	                 WHERE 
+	                      province_code=#{code}
+	         </select>
+	          <!-- String getCityNameByCode(String code) -->
+	         <select id="getCityNameByCode"  resultType="java.lang.String">
+	                SELECT  
+	                      city_name
+	                 FROM 
+	                      t_dict_cities
+	                 WHERE 
+	                      city_code=#{code}
+	         </select>
+	          <!-- String getAreaNameByCode(String code) -->
+	         <select id="getAreaNameByCode" resultType="java.lang.String">
+	                SELECT  
+	                      area_name as areaName
+	                 FROM 
+	                      t_dict_areas
+	                 WHERE 
+	                      area_code=#{code}
+	         </select>
+</mapper>

@@ -1,0 +1,72 @@
+<html>
+   <head>
+      <style type="text/css">
+        body{background:#abc}
+        .popup{
+          background:#fff;
+          text-decoration: none;
+          padding:5px;
+          border-radius: 2px;
+          margin-top: 5px;
+        }
+        #div2{
+        z-index:3;
+         position: absolute;
+          left:0;
+          top:0;
+           margin:0;
+            background: #000;
+            display:none;
+            opacity: 0.5;-moz-opacity:0.5;
+        }
+        #div{
+        z-index:4;
+           padding:5px;
+            width: 700px;
+            height: 400px;
+            background: #fff;
+            position: absolute;
+            top:80px;
+            right: 80px;
+            display:none;
+        }
+      </style>
+      <script type="text/javascript">
+      function $(id){
+    	  return document.getElementById(id);
+      }
+        function hide(){
+        	$("div").style.display="none";
+        	
+        	$("div2").style.display="none";
+        }
+        function show(){
+        	
+        	$("div2").style.width=window.screen.width;
+        	$("div2").style.height=window.screen.height;
+        	$("div2").style.display="block";
+        	$("div").style.display="block";
+        }
+      </script>
+   </head>
+   <body>
+      <a  class="popup" href="#" onclick="show()">弹出</a>
+        <div id="div2">
+            
+      </div>
+      <div class="aim_content_one aim_active">
+       <span class="dzmc dzmc_active">公司</span> 
+       <span class="dzxm dzxm_normal"></span>
+       <span class="dzxq dzxq_normal"></span> 
+       <span class="lxdh lxdh_normal"></span>
+       <span class="operation operation_normal">
+       <span class="aco_change">修改</span>|
+       <span class="aco_delete">删除</span></span>
+       <span class="swmr swmr_normal"></span>
+       </div>
+      <div id="div">
+             <a  class="popup" href="#" onclick="hide()">弹出</a>
+      </div>
+     
+   </body>
+</html>

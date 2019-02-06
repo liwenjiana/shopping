@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.mapper.OrderMapper"><!-- 接口的命名空间 -->
+     <!-- Integer insertOrder(Order order); -->
+     <!-- 添加订单 -->
+     <insert id="insertOrder"  parameterType="cn.tedu.bean.Order">
+               INSERT INTO 
+                   t_order(
+						    uid,
+							recv_name,
+							recv_district,
+							recv_addr,
+							recv_zip,
+							recv_phone,
+							recv_tel,
+						    total_price,
+						    status,
+						    created_user,
+							created_time,
+							modified_user,
+							modified_time
+               )VALUES(
+                           #{uid},
+							#{recv_name},
+							#{recv_district},
+							#{recv_addr},
+							#{recv_zip},
+							#{recv_phone},
+							#{recv_tel},
+						    #{total_price},
+						    #{status},
+						    #{created_user},
+							#{created_time},
+							#{modified_user},
+							#{modified_time}
+               )
+     </insert>
+     <!-- Integer insertOrderItem(OrderItem orderItem); -->
+     <!-- 根据订单id添加该订单商品  -->
+       <insert id="insertOrderItem" parameterType="cn.tedu.bean.OrderItem">
+                    INSERT INTO
+                        t_order_item(
+							  order_id,
+							  goods_image,
+							  goods_title,
+							  goods_item_type,
+							  goods_price,
+							  goods_count,
+							  created_user,
+							  created_time,
+							  modified_user,
+							  modified_time
+                    )VALUES(
+                              #{order_id},
+							  #{goods_image},
+							  #{goods_title},
+							  #{goods_item_type},
+							  #{goods_price},
+							  #{goods_count},
+							 #{ created_user},
+							  #{created_time},
+							  #{modified_user},
+							  #{modified_time}
+                    )
+       </insert>
+</mapper>

@@ -1,0 +1,68 @@
+<html>
+<head>
+<style type="text/css">
+      body{
+      padding:0;
+      background: #0ad
+      }
+      .tang{
+        padding:5px;
+          background: #fff; 
+          text-decoration: none;
+          border-radius: 4px;
+      }
+      #div1{
+        padding:5px;
+        width:700px;
+        height:400px;
+        display:none;
+         background: #fff; 
+         position: absolute;
+         z-index:2;
+      }
+       #div2{
+       
+        display:none;
+         background: #000; 
+         opacity:0.5;
+         position: absolute;
+         left:0;
+         top:0;
+         z-index:1;
+      }
+</style>
+<script src="js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript">
+       $(function(){
+    		var popupWidth=700;
+        	var popupHeight=400;
+        	var windowWidth=$(window).width();
+        	var windowHeight=$(window).height();
+        	console.log(windowWidth);
+        	$("#div1").css({
+        		"left":(windowWidth-700)/2,
+        		"top":120
+        	});
+        	$("#div2").css({
+        		"width":windowWidth,
+        		"height":windowHeight
+        	});
+       });
+        function show(){
+        	$("#div1").show();
+        	$("#div2").show();
+        }
+        function hide(){
+        	$("#div1").hide();
+        	$("#div2").hide();
+        }
+</script>
+</head>
+<body>
+<a class="tang" href="#" onclick="show()">µ¯³ö</a>
+<div id="div1">
+     <a class="tang" href="#" onclick="hide()" style="background: #0ad">¹Ø±Õ</a>
+</div>
+<div id="div2"></div>
+</body>
+</html>

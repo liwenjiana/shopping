@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.mapper.CartMapper"><!-- 接口的命名空间 -->
+        <!-- Integer insert(Cart cart); -->
+        <insert id="insert"  parameterType="cn.tedu.bean.Cart"  useGeneratedKeys="true" keyProperty="id">
+         INSERT INTO t_cart (
+			  uid,        
+			  goods_id,                 
+			  goods_image,          
+			  goods_title,               
+			  goods_item_type,    
+			  goods_price,            
+			  goods_count,           
+			  created_user,            
+			  created_time,           
+			  modified_user,        
+			  modified_time        
+         )VALUES(
+              #{uid},       
+			 #{ goodsId},                 
+			  #{goodsImage},        
+			  #{goodsTitle},               
+			  #{goodsItemType},  
+			 #{ goodsPrice},            
+			  #{goodsCount},           
+			  #{createdUser},             
+			  #{createdTime},           
+			  #{modifiedUser},      
+			  #{modifiedTime}
+         );
+         </insert>
+         <!-- 根据用户id和商品id查询，该商品是否已经被添加进购物车 -->
+         <!--  Integer getRecordCount(@Param("uid") Integer uid, @Param("goodsId") Integer goodsId); -->
+         <select id="getRecordCount"  resultType="java.lang.Integer">
+                  SELECT 
+                        count(id)
+                  FROM 
+                        t_cart
+                  WHERE 
+                        uid=#{uid}
+                  AND 
+                        goods_id=#{goodsId}
+         </select>
+         <!-- 根据用户id和商品id，更新购物车商品的数量-->
+         <!--  Integer update(Integer uid,Integer goodsCount,Integer goodsId); -->
+          <update id="update">
+                 UPDATE  
+                          t_cart
+                 SET 
+                         goods_count=goods_count+#{goodsCount}
+                 WHERE 
+                         uid=#{uid}
+                 AND 
+                        goods_id=#{goodsId}
+          </update>
+          <!-- 根据用户id，查询该用户购物车的商品信息 -->
+          <!--  List<Cart> getCartList(Integer uid); -->
+          <select id="getCartList" resultType="cn.tedu.bean.Cart">
+                 SELECT 
+                      id,
+                      uid,        
+					  goods_id                        AS  goodsId ,                 
+					  goods_image                 AS  goodsImage ,   
+					  goods_title                     AS  goodsTitle  ,   
+					  goods_item_type            AS  goodsItemType ,   
+					  goods_price                   AS  goodsPrice ,   
+					  goods_count                  AS  goodsCount ,   
+					  created_user                   AS  createdUser  ,   
+					  created_time                  AS  createdTime  ,   
+					  modified_user                AS   modifiedUser ,   
+					  modified_time               AS  modifiedTime 
+                 FROM 
+                     t_cart
+                 WHERE 
+                    uid=#{uid}
+          </select>
+          <!-- 根据购物车记录id，查询商品信息 -->
+          <!-- List<Cart> getCartListById(List<String> id); -->
+          <select id="getCartListById"  resultType="cn.tedu.bean.Cart"  >
+               SELECT
+                      id,
+                      uid,        
+					  goods_id                        AS  goodsId ,                 
+					  goods_image                 AS  goodsImage ,   
+					  goods_title                     AS  goodsTitle  ,   
+					  goods_item_type            AS  goodsItemType ,   
+					  goods_price                   AS  goodsPrice ,   
+					  goods_count                  AS  goodsCount ,   
+					  created_user                   AS  createdUser  ,   
+					  created_time                  AS  createdTime  ,   
+					  modified_user                AS   modifiedUser ,   
+					  modified_time               AS  modifiedTime 
+                 FROM 
+                     t_cart
+                 WHERE 
+                    id 
+                 IN
+                     <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+                    #{item}
+                    </foreach>
+          </select>
+</mapper>

@@ -1,0 +1,110 @@
+<html>
+<head>
+	<style type="text/css">
+	body { background: #0AA1ED; padding: 20px; }
+	.show_popup { background: #fff; color: #000; padding: 5px 10px; text-decoration: none; border-radius: 3px; }
+	.dismiss_popup { background: #0AA1ED; color: #fff; padding: 5px 10px; text-decoration: none; border-radius: 3px; }
+
+	#mask {
+		z-index: 1;
+		background: #000;
+		position: absolute;
+		display: none;
+		left: 0;
+		top: 0;
+		opacity: 0.3; -moz-opacity: 0.3;
+	}
+	#popup_content {
+		z-index: 9527;
+		padding: 20px;
+		background: #fff;
+		position: absolute;
+		display: none;
+	}
+	</style>
+	<script language="javascript" type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+	<script language="javascript" type="text/javascript">
+	function showPopup() {
+		
+		var popupWidth = 700;
+		var popupHeight = 400;
+
+	
+		var windowWidth = $(window).width();
+		var windowHeight = $(window).height();
+
+	
+		$("#mask").css({
+			"width": windowWidth,
+			"height": windowHeight
+		});
+		$("#mask").show();
+
+	
+		$("#popup_content").css({
+			"width": popupWidth,
+			"height": popupHeight,
+			"left": (windowWidth - popupWidth) / 2,
+			"top": 120
+		});
+		$("#popup_content").show();
+	}
+
+	function dismissPopup() {
+	
+		$("#mask").hide();
+		
+		$("#popup_content").hide();
+	}
+	</script>
+</head>
+
+<body>
+	<a href="#" class="show_popup" onclick="showPopup()">弹出</a>
+	<div style="height: 1500px"></div>
+
+	<div id="popup_content">
+	   <div>
+		<a href="#" class="dismiss_popup"onclick="dismissPopup()">关闭</a>
+	  </div>
+	 <div class="rs_content">
+	  	<form method="post" action="">
+	            <!--收货人姓名-->
+	            <div class="recipients">
+	                <span class="red">*</span><span class="kuan">收货人：</span><input type="text" name="receiverName" id="receiverName"/>
+	            </div>
+	            <!--收货人所在城市等信息-->
+	            <div data-toggle="distpicker" class="address_content">
+					 <span class="red">*</span><span class="kuan">省&nbsp;&nbsp;份：</span><select data-province="---- 选择省 ----" id="receiverState"></select>
+					  城市：<select data-city="---- 选择市 ----" id="receiverCity"></select>
+					  区/县：<select data-district="---- 选择区 ----" id="receiverDistrict"></select>
+				</div> 
+	            
+	            
+	            <!--收货人详细地址-->
+	            <div class="address_particular">
+	                <span class="red">*</span><span class="kuan">详细地址：</span><textarea name="receiverAddress" id="receiverAddress" cols="60" rows="3" placeholder="建议您如实填写详细收货地址"></textarea>
+	            </div>
+	            <!--收货人地址-->
+	            <div class="address_tel">
+	                <span class="red">*</span><span class="kuan">手机号码：</span><input type="tel" id="receiverMobile" name="receiverMobile"/>固定电话：<input type="text" name="receiverPhone" id="receiverPhone"/>
+	            </div>
+	            <!--邮政编码-->
+	            <div class="address_postcode">
+	                <span class="red">&nbsp;</span class="kuan"><span>邮政编码：</span>&nbsp;<input type="text" name="receiverZip"/>
+	            </div>
+	            <!--地址名称-->
+	            <div class="address_name">
+	                <span class="red">&nbsp;</span class="kuan"><span>地址名称：</span>&nbsp;<input type="text" id="addressName" name="addressName"/>如：<span class="sp">家</span><span class="sp">公司</span><span class="sp">宿舍</span>
+	            </div>
+	            <!--保存收货人信息-->
+	            <div class="save_recipient">
+	                保存收货人信息
+	            </div>
+    		</form>
+    		</div>
+	</div>
+
+	<div id="mask"></div>
+</body>
+</html>

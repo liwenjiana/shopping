@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.mapper.AddressMapper"><!-- 接口的命名空间 -->
+         <!--  Integer insert(Address address) -->
+         <insert id="insert" parameterType="cn.tedu.bean.Address" useGeneratedKeys="true" keyProperty="id" >
+                    INSERT INTO t_address(
+                         uid ,recv_name , 
+                         recv_province,recv_city, recv_area, recv_district,                      
+                         recv_addr ,recv_phone, recv_tel, recv_zip ,recv_tag,
+                         created_user,created_time, 
+                         modified_user,modified_time
+                    ) VALUES(
+                          #{uid },#{recvName },
+                          #{recvProvince},#{recvCity}, #{recvArea}, #{recvDistrict},   
+                          #{recvAddr},#{recvPhone}, #{recvTel}, #{recvZip} ,#{recvTag}, 
+                          #{createdUser},#{createdTime}, 
+                          #{modifiedUser},#{modifiedTime}
+                    ) ;
+         </insert>
+         
+         <!-- 根据用户id查询该用户的收货地址 -->
+         <!-- List<Address> getAddressByUid(Integer uid) -->
+         <select id="getAddressByUid" resultType="cn.tedu.bean.Address" parameterType="java.lang.Integer">
+                    SELECT 
+                         id, uid ,recv_name AS recvName , 
+                         recv_province AS recvProvince,recv_city AS recvCity, recv_area AS recvArea, recv_district AS recvDistrict,                      
+                         recv_addr AS recvAddr ,recv_phone AS recvPhone, recv_tel AS recvTel, recv_zip AS recvZip ,recv_tag AS recvTag, is_default AS isDefault,
+                         created_user AS createdUser,created_time AS createdTime, 
+                         modified_user AS modifiedUser,modified_time AS modifiedTime
+                    FROM 
+                          t_address
+                    WHERE 
+                           uid=#{uid}
+                     ORDER BY  is_default DESC,id ASC;
+         </select>
+         <!-- 根据收货地址id查询该收货地址(不安全) -->        
+         <!-- getAddressById(Integer id) -->
+         <select id="getAddressById"  parameterType="java.lang.Integer" resultType="cn.tedu.bean.Address">
+                    SELECT 
+                        id, uid ,recv_name AS recvName , 
+                        recv_province AS recvProvince,recv_city AS recvCity, recv_area AS recvArea, recv_district AS recvDistrict,                      
+                        recv_addr AS recvAddr ,recv_phone AS recvPhone, recv_tel AS recvTel, recv_zip AS recvZip ,recv_tag AS recvTag, is_default AS isDefault,
+                        created_user AS createdUser,created_time AS createdTime, 
+                        modified_user AS modifiedUser,modified_time AS modifiedTime
+                    FROM 
+                       t_address
+                    WHERE 
+                       id=#{id}
+         </select>
+         <!-- 根据收货地址id ，用户uid查询该收货地址 --> 
+         <!-- Address getAddressByUidAndId(Integer id,Integer uid) -->
+         <select id="getAddressByUidAndId" resultType="cn.tedu.bean.Address">
+                  SELECT 
+                        id, uid ,recv_name AS recvName , 
+                        recv_province AS recvProvince,recv_city AS recvCity, recv_area AS recvArea, recv_district AS recvDistrict,                      
+                        recv_addr AS recvAddr ,recv_phone AS recvPhone, recv_tel AS recvTel, recv_zip AS recvZip ,recv_tag AS recvTag, is_default AS isDefault,
+                        created_user AS createdUser,created_time AS createdTime, 
+                        modified_user AS modifiedUser,modified_time AS modifiedTime
+                    FROM 
+                       t_address
+                    WHERE 
+                       id=#{id}
+                   AND
+                       uid=#{uid}
+         </select>
+         <!-- 根据id删除收货地址（不安全） -->
+         <!-- Integer delete(Integer id) -->
+         <delete id="delete" parameterType="java.lang.Integer">
+                    DELETE FROM 
+                          t_address
+                    WHERE
+                          id=#{id}
+         </delete>
+         
+         <!-- 根据uid和id删除收货地址 -->
+         <!-- Integer delete2(Integer id,Integer uid) ; -->
+         <delete id="delete2">
+               DELETE FROM 
+                       t_address
+               WHERE 
+                       id=#{id}
+               AND 
+                       uid=#{uid}
+         </delete>
+         <!-- 设置指定id的is_default==1 -->
+         <!--  Integer setDefault(Integer id);  -->
+         <update id="setDefault" parameterType="java.lang.Integer" > 
+                   UPDATE 
+                         t_address
+                   SET
+                          is_default=1
+                    WHERE 
+                        id=#{id}
+         </update>
+         <!-- Integer  setNotDefault(Address addr);  -->
+         <update id="setNotDefault" parameterType="cn.tedu.bean.Address" > 
+                    UPDATE 
+                         t_address
+                   SET
+                          is_default=0
+                    WHERE 
+                        uid=#{uid} 
+                    AND
+                        id!=#{id}
+         </update>
+         
+         <!-- 根据uid 和id 修改收货地址  -->
+         <!-- Integer update(Address addr) -->
+         <update id="update">
+                  UPDATE 
+                      t_address
+                  SET 
+                     recv_name=#{recvName} , 
+                     recv_province=#{recvProvince} ,
+                     recv_city=#{recvCity} , 
+                     recv_area=#{recvArea} , 
+                     recv_district=#{recvDistrict},                      
+                     recv_addr=#{recvAddr} ,
+                     recv_phone=#{recvPhone}, 
+                     recv_tel=#{recvTel}, 
+                     recv_zip=#{ recvZip} ,
+                    recv_tag=#{ recvTag}
+                  WHERE 
+                       uid=#{uid} 
+                  AND 
+                       id=#{id}
+         </update>
+         <!--  Address getDefaultAddress(Integer uid); -->
+         <!-- 获取默认收货地址 -->
+         <select id="getDefaultAddress" resultType="cn.tedu.bean.Address" > 
+                SELECT 
+                          id, uid ,recv_name AS recvName , 
+                         recv_province AS recvProvince,recv_city AS recvCity, recv_area AS recvArea, recv_district AS recvDistrict,                      
+                         recv_addr AS recvAddr ,recv_phone AS recvPhone, recv_tel AS recvTel, recv_zip AS recvZip ,recv_tag AS recvTag, is_default AS isDefault,
+                         created_user AS createdUser,created_time AS createdTime, 
+                         modified_user AS modifiedUser,modified_time AS modifiedTime
+                FROM 
+                     t_address
+                WHERE 
+                     uid=#{uid} AND is_default=1;
+         </select>
+</mapper>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.mapper.GoodsMapper"><!-- 接口的命名空间 -->
+       <!-- List<Goods> getGoodsByCategoryId -->
+       <select id="getGoodsByCategoryId" resultType="cn.tedu.bean.Goods">
+              SELECT 
+                      id,
+					  category_id   AS      categoryId ,
+					  item_type      AS      itemType ,
+					  title ,               
+					  sell_point      AS      sellPoint,
+					  price,
+					  num,
+					  barcode,
+					  image,
+					  status,
+					  priority,
+					  created_time           AS        createdTime,
+					  modified_time        AS        modifiedTime ,
+					  created_user           AS        createdUser  ,
+					  modified_user        AS        modifiedUser 
+               FROM 
+                      t_goods
+               WHERE 
+                      category_id=#{categoryId}
+                AND
+                     status=1 AND num>0 
+               <if test="orderBy!=null">
+               ORDER BY ${orderBy}
+               </if>
+               <if test="offset!=null">
+               LIMIT
+                #{offset},#{count};
+               </if>
+       </select>
+       <!-- Integer getGoodsCountBycategoryId(@Param("categoryId")  Integer categoryId); -->
+       <select id="getGoodsCountBycategoryId" resultType="java.lang.Integer">
+                SELECT 
+                   count(id)
+               FROM 
+                      t_goods
+               WHERE 
+                      category_id=#{categoryId}
+       </select>
+       <!-- Goods getGoodsById(Integer id); -->
+       <select id="getGoodsById" resultType="cn.tedu.bean.Goods">
+                SELECT 
+                      id,
+					  category_id   AS      categoryId ,
+					  item_type      AS      itemType ,
+					  title ,               
+					  sell_point      AS      sellPoint,
+					  price,
+					  num,
+					  barcode,
+					  image,
+					  status,
+					  priority,
+					  created_time           AS        createdTime,
+					  modified_time        AS        modifiedTime ,
+					  created_user           AS        createdUser  ,
+					  modified_user        AS        modifiedUser 
+               FROM 
+                      t_goods
+               WHERE 
+                      id=#{id}
+              AND
+                     status=1 AND num>0 
+       </select>
+       <!-- List<Goods> getGoodsByItemType(String itemType); -->
+       <select id="getGoodsByItemType" resultType="cn.tedu.bean.Goods">
+              SELECT 
+                      id,
+					 title
+               FROM 
+                      t_goods
+               WHERE 
+                      item_type=#{itemType}
+       </select>
+</mapper>
